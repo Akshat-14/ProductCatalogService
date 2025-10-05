@@ -6,6 +6,7 @@ import com.example.productcatalogservice.models.Category;
 import com.example.productcatalogservice.models.Product;
 import com.example.productcatalogservice.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,6 +22,7 @@ public class ProductController {
     //Product @ResponseBody getProductById(Long id){}
 
     @Autowired
+    //@Qualifier("fakeStoreProductService") . Can be added by removing primary in service
     private IProductService productService;
 
     @GetMapping("/products/{id}")
@@ -90,6 +92,7 @@ public class ProductController {
         product.setDescription(productDto.getDescription());
         if(productDto.getCategoryDto() != null) {
             Category category = new Category();
+            category.setId(productDto.getCategoryDto().getId());
             category.setName(productDto.getCategoryDto().getName());
             product.setCategory(category);
         }
